@@ -13,6 +13,18 @@
       "imageHint": "making sweets"
     },
     {
+      "id": "new-thekua-1",
+      "description": "Artistic shot of Thekua.",
+      "imageUrl": "https://i.pinimg.com/736x/bb/f2/76/bbf2760ee5078e1bb0e8cbffe050e170.jpg",
+      "imageHint": "thekua snacks"
+    },
+    {
+      "id": "new-thekua-2",
+      "description": "Thekua on a plate.",
+      "imageUrl": "https://i.pinimg.com/736x/04/26/cb/0426cb3c3f02fdffc8b331750ef341c1.jpg",
+      "imageHint": "indian sweets"
+    },
+    {
       "id": "thekua-1",
       "description": "Close up of Classic Ghee Thekua.",
       "imageUrl": "https://picsum.photos/seed/t1/600/400",
@@ -65,6 +77,30 @@
       "description": "A welcoming image for the login page.",
       "imageUrl": "https://picsum.photos/seed/login/800/1200",
       "imageHint": "warm light"
+    },
+    {
+      "id": "thekua-9",
+      "description": "A sampler of sweet thekuas.",
+      "imageUrl": "https://picsum.photos/seed/t9/600/400",
+      "imageHint": "sweet variety"
+    },
+    {
+      "id": "thekua-10",
+      "description": "Spicy and savory thekua bites.",
+      "imageUrl": "https://picsum.photos/seed/t10/600/400",
+      "imageHint": "savory snacks"
+    },
+    {
+      "id": "thekua-11",
+      "description": "A pack of healthy thekua options.",
+      "imageUrl": "https://picsum.photos/seed/t11/600/400",
+      "imageHint": "healthy choice"
+    },
+    {
+      "id": "thekua-12",
+      "description": "Thekua packed as wedding favors.",
+      "imageUrl": "https://picsum.photos/seed/t12/600/400",
+      "imageHint": "wedding gifts"
     }
   ]
 }

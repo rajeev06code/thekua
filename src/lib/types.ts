@@ -10,7 +10,7 @@ export type Product = {
   price: number;
   tags: string[];
   packSizes: string[];
-  category: 'single' | 'combo';
+  category: 'classic' | 'gift' | 'healthy' | 'sweet' | 'savory' ;
 };
 
 export type Testimonial = {
