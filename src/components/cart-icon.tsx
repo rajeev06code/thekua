@@ -1,18 +1,17 @@
 "use client";
 
-import Link from 'next/link';
 import { ShoppingCart } from 'lucide-react';
-
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/hooks/use-cart';
+import { CartModal } from './cart-modal';
 
 export function CartIcon() {
   const { getTotalItems } = useCart();
   const totalItems = getTotalItems();
 
   return (
-    <Button asChild variant="ghost" size="icon" className="relative">
-      <Link href="/cart">
+    <CartModal>
+      <Button variant="ghost" size="icon" className="relative">
         <ShoppingCart className="h-5 w-5" />
         <span className="sr-only">Shopping Cart</span>
         {totalItems > 0 && (
@@ -20,7 +19,7 @@ export function CartIcon() {
             {totalItems}
           </span>
         )}
-      </Link>
-    </Button>
+      </Button>
+    </CartModal>
   );
 }

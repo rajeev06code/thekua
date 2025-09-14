@@ -1,15 +1,16 @@
 "use client";
 
 import Image from 'next/image';
-import Link from 'next/link';
 import { toast } from '@/hooks/use-toast';
-import { ShoppingCart } from 'lucide-react';
+import { ShoppingCart, Eye } from 'lucide-react';
+import { useState } from 'react';
 
 import type { Product } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useCart } from '@/hooks/use-cart';
 import placeholderImages from '@/lib/placeholder-images.json';
+import { ProductDetailModal } from './product-detail-modal';
 
 type ProductCardProps = {
   product: Product;
@@ -19,8 +20,10 @@ export function ProductCard({ product }: ProductCardProps) {
   const { addItem } = useCart();
   const firstImage = product.images[0];
   const imageUrl = placeholderImages.placeholderImages.find(p => p.id === firstImage.id)?.imageUrl || "/placeholder.svg";
+  const [isDetailModalOpen, setDetailModalOpen] = useState(false);
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
     addItem({
       id: product.id,
       name: product.name,
@@ -36,24 +39,31 @@ export function ProductCard({ product }: ProductCardProps) {
   };
 
   return (
-    <Card className="flex h-full flex-col overflow-hidden transition-all duration-300 hover:shadow-lg">
+    <>
+    <Card className="flex h-full flex-col overflow-hidden transition-all duration-300 hover:shadow-lg group">
       <CardHeader className="p-0">
-        <Link href={`/products/${product.id}`} className="block overflow-hidden">
+        <div className="block overflow-hidden relative">
           <Image
             src={imageUrl}
             alt={firstImage.alt}
             width={600}
             height={400}
-            className="aspect-[3/2] w-full object-cover transition-transform duration-300 hover:scale-110"
+            className="aspect-[3/2] w-full object-cover transition-transform duration-300 group-hover:scale-110"
             data-ai-hint="thekua snacks"
           />
-        </Link>
+           <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+              <Button size="sm" variant="secondary" onClick={() => setDetailModalOpen(true)}>
+                <Eye className="mr-2 h-4 w-4" />
+                Quick View
+              </Button>
+          </div>
+        </div>
       </CardHeader>
       <CardContent className="flex-grow p-4">
         <CardTitle className="mb-1 text-lg">
-          <Link href={`/products/${product.id}`} className="hover:text-primary">
+          <span className="cursor-pointer hover:text-primary" onClick={() => setDetailModalOpen(true)}>
             {product.name}
-          </Link>
+          </span>
         </CardTitle>
         <CardDescription className="line-clamp-2 text-sm">{product.description}</CardDescription>
       </CardContent>
@@ -65,5 +75,7 @@ export function ProductCard({ product }: ProductCardProps) {
         </Button>
       </CardFooter>
     </Card>
+    <ProductDetailModal isOpen={isDetailModalOpen} setIsOpen={setDetailModalOpen} product={product} />
+    </>
   );
 }

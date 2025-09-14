@@ -1,31 +1,26 @@
 "use client";
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { Menu, User } from 'lucide-react';
 import { Logo } from '@/components/icons';
-import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { CartIcon } from '@/components/cart-icon';
+import { LoginModal } from '@/components/login-modal';
+import { RegisterModal } from '@/components/register-modal';
 
 const navLinks = [
-  { href: '/products', label: 'Shop' },
-  { href: '/about', label: 'Our Story' },
-  { href: '/blog', label: 'Blog' },
-  { href: '/blog-ideas', label: 'Blog Ideas (AI)' },
+  { href: '#featured-products', label: 'Products' },
+  { href: '#story', label: 'Our Story' },
+  { href: '#testimonials', label: 'Testimonials' },
 ];
 
 export function Header() {
-  const pathname = usePathname();
 
   const NavLink = ({ href, label }: { href: string, label: string }) => (
     <Link
       href={href}
-      className={cn(
-        "text-sm font-medium transition-colors hover:text-primary",
-        pathname === href ? "text-primary" : "text-muted-foreground"
-      )}
+      className="text-sm font-medium transition-colors hover:text-primary text-muted-foreground"
     >
       {label}
     </Link>
@@ -45,13 +40,18 @@ export function Header() {
         </nav>
 
         <div className="flex flex-1 items-center justify-end space-x-2">
-          <div className="hidden md:flex">
-            <Button asChild variant="ghost" size="icon">
-              <Link href="/account">
-                <User className="h-5 w-5" />
-                <span className="sr-only">Account</span>
-              </Link>
-            </Button>
+          <div className="hidden md:flex items-center gap-2">
+             <LoginModal>
+              <Button variant="ghost" size="sm">
+                <User className="mr-2 h-4 w-4" />
+                Login
+              </Button>
+            </LoginModal>
+            <RegisterModal>
+               <Button variant="outline" size="sm">
+                Sign Up
+              </Button>
+            </RegisterModal>
           </div>
           <CartIcon />
           <Sheet>
@@ -70,19 +70,18 @@ export function Header() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={cn(
-                      "text-lg font-medium",
-                      pathname === link.href ? "text-primary" : "text-foreground"
-                    )}
+                    className="text-lg font-medium text-foreground"
                   >
                     {link.label}
                   </Link>
                 ))}
-                <div className="border-t pt-4">
-                  <Link href="/account" className="flex items-center text-lg font-medium text-foreground">
-                    <User className="mr-2 h-5 w-5" />
-                    Account
-                  </Link>
+                <div className="border-t pt-4 space-y-2">
+                  <LoginModal>
+                    <Button variant="ghost" className="w-full justify-start">Login</Button>
+                  </LoginModal>
+                  <RegisterModal>
+                     <Button variant="outline" className="w-full justify-start">Sign Up</Button>
+                  </RegisterModal>
                 </div>
               </div>
             </SheetContent>

@@ -9,10 +9,19 @@ import { Product } from '@/lib/types';
 import { ProductCard } from '@/components/product-card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import placeholderImages from '@/lib/placeholder-images.json';
+import { CategoryBrowser } from '@/components/category-browser';
 
 const featuredProducts = products.slice(0, 4);
 
 export default function Home() {
+  const categories = [...new Set(products.map(p => p.category))].map(category => {
+    const product = products.find(p => p.category === category);
+    return {
+      name: category.charAt(0).toUpperCase() + category.slice(1),
+      image: product?.images[0].id || 'thekua-1'
+    };
+  });
+
   return (
     <div className="flex flex-col">
       <section className="relative h-[60vh] w-full text-white md:h-[80vh]">
@@ -33,10 +42,19 @@ export default function Home() {
             Discover the authentic flavor of Bihari Thekua, handcrafted with love and heritage.
           </p>
           <Button asChild size="lg" className="mt-8 bg-accent text-accent-foreground hover:bg-accent/90">
-            <Link href="/products">
+            <Link href="#featured-products">
               Shop Now <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </Button>
+        </div>
+      </section>
+
+      <section id="categories" className="py-12 md:py-24 bg-secondary/30">
+        <div className="container">
+          <h2 className="mb-8 text-center font-headline text-3xl font-bold md:mb-12 md:text-4xl">
+            Browse by Category
+          </h2>
+          <CategoryBrowser categories={categories} products={products} />
         </div>
       </section>
 
@@ -49,11 +67,6 @@ export default function Home() {
             {featuredProducts.map((product: Product) => (
               <ProductCard key={product.id} product={product} />
             ))}
-          </div>
-          <div className="mt-12 text-center">
-            <Button asChild variant="outline">
-              <Link href="/products">View All Products</Link>
-            </Button>
           </div>
         </div>
       </section>
