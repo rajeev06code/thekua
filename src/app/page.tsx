@@ -24,7 +24,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col">
-      <section className="relative h-[60vh] w-full text-white md:h-[80vh]">
+      <section className="relative h-[40vh] w-full text-white md:h-[50vh]">
         <Image
           src={placeholderImages.placeholderImages.find(p => p.id === "hero-banner")?.imageUrl || "/placeholder.svg"}
           alt="Traditional Thekua snacks"
