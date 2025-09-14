@@ -15,25 +15,27 @@ import { HeroCarousel } from '@/components/hero-carousel';
 const featuredProducts = products.slice(0, 4);
 
 export default function Home() {
-  const categories = [...new Set(products.map(p => p.category))].map(category => {
-    const product = products.find(p => p.category === category);
+  const categories = [
+    ...new Set(products.map(p => p.category.charAt(0).toUpperCase() + p.category.slice(1)))
+  ].map(categoryName => {
+    const product = products.find(p => p.category.toLowerCase() === categoryName.toLowerCase());
     return {
-      name: category.charAt(0).toUpperCase() + category.slice(1),
+      name: categoryName,
       image: product?.images[0].id || 'thekua-1'
     };
   });
   
   const heroImages = [
     placeholderImages.placeholderImages.find(p => p.id === "hero-banner"),
-    placeholderImages.placeholderImages.find(p => p.id === "new-thekua-1"),
-    placeholderImages.placeholderImages.find(p => p.id === "new-thekua-2"),
+    placeholderImages.placeholderImages.find(p => p.id === "new-hero-1"),
+    placeholderImages.placeholderImages.find(p => p.id === "new-hero-2"),
     placeholderImages.placeholderImages.find(p => p.id === "thekua-8"),
   ].filter(Boolean) as { id: string; description: string; imageUrl: string; imageHint: string; }[];
 
 
   return (
     <div className="flex flex-col">
-      <section className="relative h-[40vh] w-full text-white md:h-[50vh]">
+       <section className="relative h-[40vh] w-full text-white md:h-[40vh]">
         <HeroCarousel images={heroImages} />
         <div className="absolute inset-0 bg-black/50" />
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center">

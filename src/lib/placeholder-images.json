@@ -101,6 +101,18 @@
       "description": "Thekua packed as wedding favors.",
       "imageUrl": "https://picsum.photos/seed/t12/600/400",
       "imageHint": "wedding gifts"
+    },
+    {
+      "id": "new-hero-1",
+      "description": "Thekua on a wooden board.",
+      "imageUrl": "https://www.yummefy.com/uploads/1572443220Thekua-Yummefy.jpg",
+      "imageHint": "thekua snacks"
+    },
+    {
+      "id": "new-hero-2",
+      "description": "Thekua being prepared.",
+      "imageUrl": "https://i.ytimg.com/vi/Z_KS3Bv-Ftk/mqdefault.jpg",
+      "imageHint": "making thekua"
     }
   ]
 }

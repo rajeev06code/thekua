@@ -45,6 +45,18 @@ const nextConfig: NextConfig = {
         hostname: 'www.silkcityexpress.com',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.yummefy.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'i.ytimg.com',
+        port: '',
+        pathname: '/**',
       }
     ],
   },
