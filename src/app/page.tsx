@@ -36,7 +36,7 @@ export default function Home() {
       <section className="relative h-[40vh] w-full text-white md:h-[50vh]">
         <HeroCarousel images={heroImages} />
         <div className="absolute inset-0 bg-black/50" />
-        <div className="relative z-10 flex h-full flex-col items-center justify-center text-center">
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center">
           <h1 className="font-headline text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
             Taste of Tradition, Bite of Bihar.
           </h1>
