@@ -1,3 +1,70 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-banner",
+      "description": "A beautiful spread of traditional Thekua snacks on a rustic surface.",
+      "imageUrl": "https://picsum.photos/seed/hero/1920/1080",
+      "imageHint": "thekua snacks"
+    },
+    {
+      "id": "story-image",
+      "description": "Hands kneading dough for Thekua, showing the traditional process.",
+      "imageUrl": "https://picsum.photos/seed/story/600/400",
+      "imageHint": "making sweets"
+    },
+    {
+      "id": "thekua-1",
+      "description": "Close up of Classic Ghee Thekua.",
+      "imageUrl": "https://picsum.photos/seed/t1/600/400",
+      "imageHint": "thekua snacks"
+    },
+    {
+      "id": "thekua-2",
+      "description": "A stack of Classic Ghee Thekua.",
+      "imageUrl": "https://picsum.photos/seed/t2/600/400",
+      "imageHint": "sweet snacks"
+    },
+    {
+      "id": "thekua-3",
+      "description": "Coconut Crunch Thekua with visible coconut flakes.",
+      "imageUrl": "https://picsum.photos/seed/t3/600/400",
+      "imageHint": "coconut snacks"
+    },
+    {
+      "id": "thekua-4",
+      "description": "Close up of Coconut Crunch Thekua.",
+      "imageUrl": "https://picsum.photos/seed/t4/600/400",
+      "imageHint": "biscuit snacks"
+    },
+    {
+      "id": "thekua-5",
+      "description": "Dry Fruit Delight Thekua with nuts visible.",
+      "imageUrl": "https://picsum.photos/seed/t5/600/400",
+      "imageHint": "nuts snacks"
+    },
+    {
+      "id": "thekua-6",
+      "description": "A plate of Dry Fruit Delight Thekua.",
+      "imageUrl": "https://picsum.photos/seed/t6/600/400",
+      "imageHint": "indian sweets"
+    },
+    {
+      "id": "thekua-7",
+      "description": "Sugar-Free Thekua made with jaggery.",
+      "imageUrl": "https://picsum.photos/seed/t7/600/400",
+      "imageHint": "healthy snacks"
+    },
+    {
+      "id": "thekua-8",
+      "description": "A festive gift box of assorted Thekuas.",
+      "imageUrl": "https://picsum.photos/seed/t8/600/400",
+      "imageHint": "gift box"
+    },
+    {
+      "id": "login-image",
+      "description": "A welcoming image for the login page.",
+      "imageUrl": "https://picsum.photos/seed/login/800/1200",
+      "imageHint": "warm light"
+    }
+  ]
 }
