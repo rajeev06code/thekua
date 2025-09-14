@@ -10,6 +10,7 @@ import { ProductCard } from '@/components/product-card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import placeholderImages from '@/lib/placeholder-images.json';
 import { CategoryBrowser } from '@/components/category-browser';
+import { HeroCarousel } from '@/components/hero-carousel';
 
 const featuredProducts = products.slice(0, 4);
 
@@ -21,18 +22,19 @@ export default function Home() {
       image: product?.images[0].id || 'thekua-1'
     };
   });
+  
+  const heroImages = [
+    placeholderImages.placeholderImages.find(p => p.id === "hero-banner"),
+    placeholderImages.placeholderImages.find(p => p.id === "new-thekua-1"),
+    placeholderImages.placeholderImages.find(p => p.id === "new-thekua-2"),
+    placeholderImages.placeholderImages.find(p => p.id === "thekua-8"),
+  ].filter(Boolean) as { id: string; description: string; imageUrl: string; imageHint: string; }[];
+
 
   return (
     <div className="flex flex-col">
       <section className="relative h-[40vh] w-full text-white md:h-[50vh]">
-        <Image
-          src={placeholderImages.placeholderImages.find(p => p.id === "hero-banner")?.imageUrl || "/placeholder.svg"}
-          alt="Traditional Thekua snacks"
-          fill
-          className="object-cover"
-          priority
-          data-ai-hint="thekua snacks"
-        />
+        <HeroCarousel images={heroImages} />
         <div className="absolute inset-0 bg-black/50" />
         <div className="relative z-10 flex h-full flex-col items-center justify-center text-center">
           <h1 className="font-headline text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
