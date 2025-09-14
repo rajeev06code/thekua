@@ -33,15 +33,15 @@ export function HeroCarousel({ images }: HeroCarouselProps) {
       onMouseLeave={plugin.current.reset}
     >
       <CarouselContent>
-        {images.map((image) => (
-          <CarouselItem key={image.id}>
-            <div className="relative w-full h-[40vh] md:h-[50vh]">
+        {images.map((image, index) => (
+          <CarouselItem key={image.id || index}>
+            <div className="relative w-full h-[40vh] md:h-[40vh]">
               <Image
                 src={image.imageUrl}
                 alt={image.description}
                 fill
                 className="object-cover"
-                priority={images.indexOf(image) === 0}
+                priority={index === 0}
                 data-ai-hint={image.imageHint}
               />
             </div>
@@ -51,3 +51,4 @@ export function HeroCarousel({ images }: HeroCarouselProps) {
     </Carousel>
   );
 }
+
