@@ -2,11 +2,12 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { ProductCard } from './product-card';
 import { Product } from '@/lib/types';
 import placeholderImages from '@/lib/placeholder-images.json';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { cn } from '@/lib/utils';
 
 interface Category {
     name: string;
@@ -33,24 +34,33 @@ export function CategoryBrowser({ categories, products }: CategoryBrowserProps) 
 
     return (
         <>
-            <div className="flex flex-wrap items-center justify-center gap-8">
-                {categories.map((category) => {
-                    const imageUrl = placeholderImages.placeholderImages.find(p => p.id === category.image)?.imageUrl || "/placeholder.svg";
-                    return (
-                        <div key={category.name} className="flex flex-col items-center gap-2 cursor-pointer group" onClick={() => handleCategoryClick(category)}>
-                            <div className="relative h-32 w-32 rounded-full overflow-hidden border-4 border-transparent group-hover:border-primary transition-all duration-300 shadow-lg">
-                                <Image
-                                    src={imageUrl}
-                                    alt={category.name}
-                                    fill
-                                    className="object-cover transition-transform duration-300 group-hover:scale-110"
-                                    data-ai-hint="thekua snacks"
-                                />
+            <div className="md:flex md:flex-wrap md:items-center md:justify-center md:gap-8">
+                <div className="flex gap-4 overflow-x-auto pb-4 md:flex-wrap md:justify-center md:gap-8 md:overflow-x-visible md:pb-0">
+                    {categories.map((category, index) => {
+                        const imageUrl = placeholderImages.placeholderImages.find(p => p.id === category.image)?.imageUrl || "/placeholder.svg";
+                        return (
+                            <div 
+                                key={category.name} 
+                                className={cn(
+                                    "flex flex-col items-center gap-2 cursor-pointer group flex-shrink-0 w-32",
+                                    index === categories.length - 1 ? "pr-16 md:pr-0" : ""
+                                )}
+                                onClick={() => handleCategoryClick(category)}
+                            >
+                                <div className="relative h-32 w-32 rounded-full overflow-hidden border-4 border-transparent group-hover:border-primary transition-all duration-300 shadow-lg">
+                                    <Image
+                                        src={imageUrl}
+                                        alt={category.name}
+                                        fill
+                                        className="object-cover transition-transform duration-300 group-hover:scale-110"
+                                        data-ai-hint="thekua snacks"
+                                    />
+                                </div>
+                                <h3 className="font-semibold text-lg text-muted-foreground group-hover:text-primary transition-colors text-center">{category.name}</h3>
                             </div>
-                            <h3 className="font-semibold text-lg text-muted-foreground group-hover:text-primary transition-colors">{category.name}</h3>
-                        </div>
-                    )
-                })}
+                        )
+                    })}
+                </div>
             </div>
 
             {selectedCategory && (
