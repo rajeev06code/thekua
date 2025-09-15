@@ -10,9 +10,9 @@ import { LoginModal } from '@/components/login-modal';
 import { RegisterModal } from '@/components/register-modal';
 
 const navLinks = [
-  { href: '#featured-products', label: 'Products' },
-  { href: '#story', label: 'Our Story' },
-  { href: '#testimonials', label: 'Testimonials' },
+  { href: '/products', label: 'Products' },
+  { href: '/about', label: 'Our Story' },
+  { href: '/blog', label: 'Blog' },
 ];
 
 export function Header() {

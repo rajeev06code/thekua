@@ -3,14 +3,14 @@
 import { ShoppingCart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/hooks/use-cart';
-import { CartModal } from './cart-modal';
+import { CheckoutFlowModal } from './checkout-flow-modal';
 
 export function CartIcon() {
   const { getTotalItems } = useCart();
   const totalItems = getTotalItems();
 
   return (
-    <CartModal>
+    <CheckoutFlowModal>
       <Button variant="ghost" size="icon" className="relative">
         <ShoppingCart className="h-5 w-5" />
         <span className="sr-only">Shopping Cart</span>
@@ -20,6 +20,6 @@ export function CartIcon() {
           </span>
         )}
       </Button>
-    </CartModal>
+    </CheckoutFlowModal>
   );
 }

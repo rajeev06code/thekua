@@ -1,16 +1,12 @@
-import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, Star } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { products, testimonials } from '@/lib/data';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { products } from '@/lib/data';
 import placeholderImages from '@/lib/placeholder-images.json';
 import { CategoryBrowser } from '@/components/category-browser';
 import { HeroCarousel } from '@/components/hero-carousel';
 import { ProductCarousel } from '@/components/product-carousel';
-import { Product } from '@/lib/types';
 
 export default function Home() {
   const categories = [
@@ -34,12 +30,19 @@ export default function Home() {
   const pujaSpecialProducts = products.filter(p => p.category === 'puja');
   const specialOfferProducts = products.filter(p => p.tags.includes('special-offer'));
 
-  const Section = ({ title, children }: { title: string, children: React.ReactNode }) => (
+  const Section = ({ title, children, href }: { title: string, href:string, children: React.ReactNode }) => (
     <section className="py-12 md:py-16">
       <div className="container">
-        <h2 className="mb-8 text-center font-headline text-3xl font-bold md:mb-12 md:text-4xl">
-          {title}
-        </h2>
+        <div className="mb-8 flex items-center justify-between md:mb-12">
+            <h2 className="text-center font-headline text-3xl font-bold md:text-4xl">
+            {title}
+            </h2>
+            <Button asChild variant="outline">
+                <Link href={href}>
+                    View All <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+            </Button>
+        </div>
         {children}
       </div>
     </section>
@@ -47,7 +50,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col">
-       <section className="relative h-[40vh] w-full text-white md:h-[40vh]">
+       <section className="relative h-[60vh] w-full text-white md:h-[60vh]">
         <HeroCarousel images={heroImages} />
         <div className="absolute inset-0 bg-black/50" />
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center">
@@ -58,7 +61,7 @@ export default function Home() {
             Discover the authentic flavor of Bihari Thekua, handcrafted with love and heritage.
           </p>
           <Button asChild size="lg" className="mt-8 bg-accent text-accent-foreground hover:bg-accent/90">
-            <Link href="#categories">
+            <Link href="/products">
               Shop Now <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </Button>
@@ -74,71 +77,58 @@ export default function Home() {
         </div>
       </section>
       
-      <Section title="Popular Products">
+      <Section title="Popular Products" href="/products">
         <ProductCarousel products={popularProducts} />
       </Section>
       
-      <Section title="Puja Specials">
+      <Section title="Puja Specials" href="/products?category=puja">
         <ProductCarousel products={pujaSpecialProducts} />
       </Section>
 
-      <Section title="Special Offers">
+      <Section title="Special Offers" href="/products?tag=special-offer">
         <ProductCarousel products={specialOfferProducts} />
       </Section>
 
       <section id="story" className="bg-secondary/50 py-12 md:py-24">
         <div className="container grid items-center gap-8 md:grid-cols-2 md:gap-16">
-          <div className="relative h-80 w-full overflow-hidden rounded-lg shadow-lg">
-            <Image
-              src={placeholderImages.placeholderImages.find(p => p.id === "story-image")?.imageUrl || "/placeholder.svg"}
+          <div className="relative h-96 w-full overflow-hidden rounded-lg shadow-lg">
+             <img
+              src="https://picsum.photos/seed/story/600/400"
               alt="The making of Thekua"
-              fill
-              className="object-cover"
+              className="object-cover w-full h-full"
               data-ai-hint="making sweets"
             />
           </div>
-          <div>
+          <div className="flex flex-col items-start">
             <h2 className="mb-4 font-headline text-3xl font-bold md:text-4xl">
               Our Story
             </h2>
             <p className="mb-4 text-muted-foreground">
               Thekua Delight was born from a desire to share a piece of our Bihari heritage with the world. Our journey began in a family kitchen, with a recipe passed down through generations. We believe in authenticity, using only the finest natural ingredients to create Thekua that tastes just like home.
             </p>
-            <p className="text-muted-foreground">
-              Each Thekua is more than just a snack; it's a celebration of culture, family, and the timeless traditions of Bihar.
-            </p>
+             <Button asChild>
+                <Link href="/about">
+                    Read Our Full Story
+                </Link>
+            </Button>
           </div>
         </div>
       </section>
 
       <section id="testimonials" className="py-12 md:py-24">
         <div className="container">
-          <h2 className="mb-8 text-center font-headline text-3xl font-bold md:mb-12 md:text-4xl">
+           <h2 className="mb-8 text-center font-headline text-3xl font-bold md:mb-12 md:text-4xl">
             What Our Customers Say
           </h2>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {testimonials.map((testimonial) => (
-              <Card key={testimonial.id} className="transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
-                <CardContent className="p-6">
-                  <div className="flex items-center">
-                    <Avatar>
-                       <AvatarImage src={testimonial.avatar} alt={testimonial.name} />
-                      <AvatarFallback>{testimonial.name.charAt(0)}</AvatarFallback>
-                    </Avatar>
-                    <div className="ml-4">
-                      <p className="font-semibold">{testimonial.name}</p>
-                      <p className="text-sm text-muted-foreground">{testimonial.location}</p>
-                    </div>
-                  </div>
-                  <div className="my-4 flex">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className={`h-5 w-5 ${i < testimonial.rating ? 'text-accent' : 'text-muted-foreground/50'}`} fill={i < testimonial.rating ? 'currentColor' : 'none'}/>
-                    ))}
-                  </div>
-                  <p className="text-muted-foreground">"{testimonial.text}"</p>
-                </CardContent>
-              </Card>
-            ))}
+          <div className="mx-auto max-w-4xl">
+            <div className="rounded-lg bg-secondary/30 p-8">
+                <blockquote className="text-center text-xl font-medium text-foreground">
+                    <p>"The Classic Ghee Thekua tastes exactly like the ones my grandmother used to make. It brought back so many childhood memories. Absolutely delicious!"</p>
+                    <footer className="mt-4">
+                        <cite className="text-base font-bold not-italic text-primary">Priya Sharma, Mumbai</cite>
+                    </footer>
+                </blockquote>
+            </div>
           </div>
         </div>
       </section>
