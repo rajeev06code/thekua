@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from 'next/image';
@@ -80,8 +81,8 @@ export function CartModal({ children }: { children: React.ReactNode }) {
                     <span>₹{grandTotal.toFixed(2)}</span>
                   </div>
               </div>
-              <Button size="lg" className="w-full">
-                Proceed to Checkout
+              <Button asChild size="lg" className="w-full">
+                <Link href="/checkout">Proceed to Checkout</Link>
               </Button>
             </DialogFooter>
           </>
