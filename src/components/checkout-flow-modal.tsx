@@ -150,7 +150,7 @@ export function CheckoutFlowModal({ children }: { children: React.ReactNode }) {
       </DialogHeader>
       <form id="checkout-form" onSubmit={handleSubmit(onSubmit)} className="flex-grow overflow-y-auto pr-2 py-4 -mr-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-6 md:pr-4">
+            <div className="space-y-6">
                 <div>
                     <Label htmlFor="email">Email Address</Label>
                     <Input id="email" type="email" placeholder="you@example.com" {...register('email')} />
@@ -203,7 +203,7 @@ export function CheckoutFlowModal({ children }: { children: React.ReactNode }) {
                     </RadioGroup>
                   </div>
             </div>
-            <div className="space-y-4 bg-secondary/50 rounded-lg p-4 -mt-4 md:mt-0 h-fit">
+            <div className="space-y-4 bg-secondary/50 rounded-lg p-4 h-fit">
               <h3 className="font-semibold">Order Summary</h3>
                <div className="space-y-2 max-h-48 overflow-y-auto pr-2 border-t border-b py-2">
                   {cartItems.map(item => {
