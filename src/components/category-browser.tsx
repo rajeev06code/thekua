@@ -6,6 +6,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { ProductCard } from './product-card';
 import { Product } from '@/lib/types';
 import placeholderImages from '@/lib/placeholder-images.json';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 interface Category {
     name: string;
@@ -54,15 +55,17 @@ export function CategoryBrowser({ categories, products }: CategoryBrowserProps) 
 
             {selectedCategory && (
                  <Dialog open={isModalOpen} onOpenChange={setModalOpen}>
-                    <DialogContent className="sm:max-w-4xl">
+                    <DialogContent className="w-full max-w-4xl h-[90vh] flex flex-col">
                         <DialogHeader>
                             <DialogTitle className="text-3xl font-headline">{selectedCategory.name} Products</DialogTitle>
                         </DialogHeader>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 py-6 max-h-[70vh] overflow-y-auto pr-4">
-                            {productsForCategory.map(product => (
-                                <ProductCard key={product.id} product={product} />
-                            ))}
-                        </div>
+                        <ScrollArea className="flex-grow">
+                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 py-6 pr-6">
+                                {productsForCategory.map(product => (
+                                    <ProductCard key={product.id} product={product} />
+                                ))}
+                            </div>
+                        </ScrollArea>
                     </DialogContent>
                 </Dialog>
             )}

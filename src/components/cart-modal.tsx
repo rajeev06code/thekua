@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import placeholderImages from '@/lib/placeholder-images.json';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 export function CartModal({ children }: { children: React.ReactNode }) {
   const { cartItems, updateQuantity, removeItem, getCartTotal, getTotalItems } = useCart();
@@ -21,20 +22,21 @@ export function CartModal({ children }: { children: React.ReactNode }) {
       <DialogTrigger asChild>
         {children}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[800px] grid-rows-[auto_1fr_auto]">
+      <DialogContent className="sm:max-w-lg md:max-w-2xl h-[90vh] flex flex-col">
         <DialogHeader>
           <DialogTitle className="text-2xl">Your Shopping Cart</DialogTitle>
         </DialogHeader>
 
         {cartItems.length === 0 ? (
-          <div className="flex flex-col items-center justify-center gap-4 py-16">
+          <div className="flex flex-col items-center justify-center gap-4 flex-grow">
             <ShoppingCart className="h-16 w-16 text-muted-foreground" />
             <h2 className="text-2xl font-semibold">Your cart is empty</h2>
             <p className="text-muted-foreground">Looks like you haven't added anything yet.</p>
           </div>
         ) : (
-          <div className="grid gap-8 py-4 overflow-y-auto max-h-[60vh] px-2">
-            <div className="space-y-4">
+          <>
+          <ScrollArea className="flex-grow">
+            <div className="space-y-4 pr-6">
               {cartItems.map(item => {
                 const imageUrl = placeholderImages.placeholderImages.find(p => p.id === item.image.id)?.imageUrl || "/placeholder.svg";
                 return (
@@ -61,30 +63,28 @@ export function CartModal({ children }: { children: React.ReactNode }) {
                 );
               })}
             </div>
-          </div>
-        )}
-
-        {cartItems.length > 0 && (
-          <DialogFooter className="border-t pt-4 flex-col sm:flex-col sm:space-x-0 items-stretch gap-4">
-            <div className="space-y-2">
-                <div className="flex justify-between">
-                  <span>Subtotal ({totalItems} items)</span>
-                  <span>₹{cartTotal.toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Shipping</span>
-                  <span>{shippingCost > 0 ? `₹${shippingCost.toFixed(2)}` : 'Free'}</span>
-                </div>
-                <Separator />
-                <div className="flex justify-between font-bold text-lg">
-                  <span>Grand Total</span>
-                  <span>₹{grandTotal.toFixed(2)}</span>
-                </div>
-            </div>
-            <Button size="lg" className="w-full">
-              Proceed to Checkout
-            </Button>
-          </DialogFooter>
+            </ScrollArea>
+             <DialogFooter className="border-t pt-4 flex-col items-stretch gap-4 mt-auto">
+              <div className="space-y-2">
+                  <div className="flex justify-between">
+                    <span>Subtotal ({totalItems} items)</span>
+                    <span>₹{cartTotal.toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Shipping</span>
+                    <span>{shippingCost > 0 ? `₹${shippingCost.toFixed(2)}` : 'Free'}</span>
+                  </div>
+                  <Separator />
+                  <div className="flex justify-between font-bold text-lg">
+                    <span>Grand Total</span>
+                    <span>₹{grandTotal.toFixed(2)}</span>
+                  </div>
+              </div>
+              <Button size="lg" className="w-full">
+                Proceed to Checkout
+              </Button>
+            </DialogFooter>
+          </>
         )}
       </DialogContent>
     </Dialog>
