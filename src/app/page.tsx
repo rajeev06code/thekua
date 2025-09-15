@@ -5,14 +5,12 @@ import { ArrowRight, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { products, testimonials } from '@/lib/data';
-import { Product } from '@/lib/types';
-import { ProductCard } from '@/components/product-card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import placeholderImages from '@/lib/placeholder-images.json';
 import { CategoryBrowser } from '@/components/category-browser';
 import { HeroCarousel } from '@/components/hero-carousel';
-
-const featuredProducts = products.slice(0, 4);
+import { ProductCarousel } from '@/components/product-carousel';
+import { Product } from '@/lib/types';
 
 export default function Home() {
   const categories = [
@@ -32,6 +30,20 @@ export default function Home() {
     placeholderImages.placeholderImages.find(p => p.id === "thekua-8"),
   ].filter(Boolean) as { id: string; description: string; imageUrl: string; imageHint: string; }[];
 
+  const popularProducts = products.filter(p => p.tags.includes('bestseller'));
+  const pujaSpecialProducts = products.filter(p => p.category === 'puja');
+  const specialOfferProducts = products.filter(p => p.tags.includes('special-offer'));
+
+  const Section = ({ title, children }: { title: string, children: React.ReactNode }) => (
+    <section className="py-12 md:py-16">
+      <div className="container">
+        <h2 className="mb-8 text-center font-headline text-3xl font-bold md:mb-12 md:text-4xl">
+          {title}
+        </h2>
+        {children}
+      </div>
+    </section>
+  );
 
   return (
     <div className="flex flex-col">
@@ -46,7 +58,7 @@ export default function Home() {
             Discover the authentic flavor of Bihari Thekua, handcrafted with love and heritage.
           </p>
           <Button asChild size="lg" className="mt-8 bg-accent text-accent-foreground hover:bg-accent/90">
-            <Link href="#featured-products">
+            <Link href="#categories">
               Shop Now <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </Button>
@@ -61,19 +73,18 @@ export default function Home() {
           <CategoryBrowser categories={categories} products={products} />
         </div>
       </section>
+      
+      <Section title="Popular Products">
+        <ProductCarousel products={popularProducts} />
+      </Section>
+      
+      <Section title="Puja Specials">
+        <ProductCarousel products={pujaSpecialProducts} />
+      </Section>
 
-      <section id="featured-products" className="py-12 md:py-24">
-        <div className="container">
-          <h2 className="mb-8 text-center font-headline text-3xl font-bold md:mb-12 md:text-4xl">
-            Featured Products
-          </h2>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {featuredProducts.map((product: Product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-        </div>
-      </section>
+      <Section title="Special Offers">
+        <ProductCarousel products={specialOfferProducts} />
+      </Section>
 
       <section id="story" className="bg-secondary/50 py-12 md:py-24">
         <div className="container grid items-center gap-8 md:grid-cols-2 md:gap-16">

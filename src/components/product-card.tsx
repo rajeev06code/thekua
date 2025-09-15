@@ -40,14 +40,14 @@ export function ProductCard({ product }: ProductCardProps) {
 
   return (
     <>
-    <Card className="flex h-full flex-col overflow-hidden transition-all duration-300 hover:shadow-lg group">
+    <Card className="w-full max-w-sm mx-auto flex h-full flex-col overflow-hidden transition-all duration-300 hover:shadow-lg group">
       <CardHeader className="p-0">
         <div className="block overflow-hidden relative">
           <Image
             src={imageUrl}
             alt={firstImage.alt}
-            width={600}
-            height={400}
+            width={300}
+            height={200}
             className="aspect-[3/2] w-full object-cover transition-transform duration-300 group-hover:scale-110"
             data-ai-hint="thekua snacks"
           />
@@ -59,19 +59,19 @@ export function ProductCard({ product }: ProductCardProps) {
           </div>
         </div>
       </CardHeader>
-      <CardContent className="flex-grow p-4">
-        <CardTitle className="mb-1 text-lg">
+      <CardContent className="flex-grow p-3">
+        <CardTitle className="mb-1 text-base">
           <span className="cursor-pointer hover:text-primary" onClick={() => setDetailModalOpen(true)}>
             {product.name}
           </span>
         </CardTitle>
-        <CardDescription className="line-clamp-2 text-sm">{product.description}</CardDescription>
+        <CardDescription className="line-clamp-2 text-xs">{product.description}</CardDescription>
       </CardContent>
-      <CardFooter className="flex items-center justify-between p-4 pt-0">
-        <p className="text-lg font-semibold">₹{product.price.toFixed(2)}</p>
-        <Button size="sm" onClick={handleAddToCart}>
-          <ShoppingCart className="mr-2 h-4 w-4" />
-          Add to Cart
+      <CardFooter className="flex items-center justify-between p-3 pt-0">
+        <p className="text-base font-semibold">₹{product.price.toFixed(2)}</p>
+        <Button size="sm" className="text-xs" onClick={handleAddToCart}>
+          <ShoppingCart className="mr-1.5 h-4 w-4" />
+          Add
         </Button>
       </CardFooter>
     </Card>
