@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Minus, Plus, Trash2, ShoppingCart, X, CheckCircle, ArrowLeft } from 'lucide-react';
@@ -14,26 +14,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Checkbox } from '@/components/ui/checkbox';
-import { useForm, type SubmitHandler } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 import type { CartItem } from '@/lib/types';
 
 type CheckoutStep = 'cart' | 'checkout' | 'confirmation';
-
-const checkoutSchema = z.object({
-  email: z.string().email('Invalid email address'),
-  firstName: z.string().min(1, 'First name is required'),
-  lastName: z.string().min(1, 'Last name is required'),
-  address: z.string().min(1, 'Address is required'),
-  city: z.string().min(1, 'City is required'),
-  state: z.string().min(1, 'State is required'),
-  zip: z.string().min(1, 'ZIP code is required'),
-  paymentMethod: z.enum(['card', 'upi', 'cod']),
-  saveInfo: z.boolean().optional(),
-});
-
-type CheckoutFormValues = z.infer<typeof checkoutSchema>;
 
 interface OrderDetails {
   orderId: string;
@@ -46,11 +29,6 @@ export function CheckoutFlowModal({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
   const [step, setStep] = useState<CheckoutStep>('cart');
   const [orderDetails, setOrderDetails] = useState<OrderDetails | null>(null);
-
-  const { register, handleSubmit, formState: { errors } } = useForm<CheckoutFormValues>({
-    resolver: zodResolver(checkoutSchema),
-    defaultValues: { paymentMethod: 'card' }
-  });
 
   const totalItems = getTotalItems();
   const cartTotal = getCartTotal();
@@ -65,7 +43,8 @@ export function CheckoutFlowModal({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const onSubmit: SubmitHandler<CheckoutFormValues> = (data) => {
+  const handlePlaceOrder = () => {
+    if (cartItems.length === 0) return;
     const orderId = `TD-${Math.floor(Math.random() * 9000) + 1000}`;
     const newOrderDetails: OrderDetails = {
       orderId,
@@ -148,55 +127,48 @@ export function CheckoutFlowModal({ children }: { children: React.ReactNode }) {
           Checkout
         </DialogTitle>
       </DialogHeader>
-      <form id="checkout-form" onSubmit={handleSubmit(onSubmit)} className="flex-grow overflow-y-auto pr-2 py-4 -mr-6">
+      <div className="flex-grow overflow-y-auto pr-2 py-4 -mr-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-6">
                 <div>
                     <Label htmlFor="email">Email Address</Label>
-                    <Input id="email" type="email" placeholder="you@example.com" {...register('email')} />
-                    {errors.email && <p className="text-sm text-destructive mt-1">{errors.email.message}</p>}
+                    <Input id="email" type="email" placeholder="you@example.com" />
                 </div>
                  <div className="grid grid-cols-2 gap-4">
                     <div>
                         <Label htmlFor="firstName">First Name</Label>
-                        <Input id="firstName" placeholder="John" {...register('firstName')} />
-                        {errors.firstName && <p className="text-sm text-destructive mt-1">{errors.firstName.message}</p>}
+                        <Input id="firstName" placeholder="John" />
                     </div>
                     <div>
                         <Label htmlFor="lastName">Last Name</Label>
-                        <Input id="lastName" placeholder="Doe" {...register('lastName')} />
-                        {errors.lastName && <p className="text-sm text-destructive mt-1">{errors.lastName.message}</p>}
+                        <Input id="lastName" placeholder="Doe" />
                     </div>
                  </div>
                  <div>
                     <Label htmlFor="address">Address</Label>
-                    <Input id="address" placeholder="123 Main St" {...register('address')} />
-                    {errors.address && <p className="text-sm text-destructive mt-1">{errors.address.message}</p>}
+                    <Input id="address" placeholder="123 Main St" />
                  </div>
                  <div className="grid grid-cols-3 gap-4">
                     <div>
                         <Label htmlFor="city">City</Label>
-                        <Input id="city" placeholder="Patna" {...register('city')} />
-                        {errors.city && <p className="text-sm text-destructive mt-1">{errors.city.message}</p>}
+                        <Input id="city" placeholder="Patna" />
                     </div>
                     <div>
                         <Label htmlFor="state">State</Label>
-                        <Input id="state" placeholder="Bihar" {...register('state')} />
-                        {errors.state && <p className="text-sm text-destructive mt-1">{errors.state.message}</p>}
+                        <Input id="state" placeholder="Bihar" />
                     </div>
                     <div>
                         <Label htmlFor="zip">ZIP</Label>
-                        <Input id="zip" placeholder="800001" {...register('zip')} />
-                        {errors.zip && <p className="text-sm text-destructive mt-1">{errors.zip.message}</p>}
+                        <Input id="zip" placeholder="800001" />
                     </div>
                  </div>
                  <div className="flex items-center space-x-2">
-                    <Checkbox id="save-info" {...register('saveInfo')} />
+                    <Checkbox id="save-info" />
                     <Label htmlFor="save-info">Save this information for next time</Label>
                  </div>
                   <div>
                     <Label>Payment</Label>
-                    <RadioGroup defaultValue="card" className="mt-2 space-y-2" {...register('paymentMethod')}>
+                    <RadioGroup defaultValue="card" className="mt-2 space-y-2">
                         <div className="flex items-center space-x-2"><RadioGroupItem value="card" id="card" /><Label htmlFor="card">Credit/Debit Card</Label></div>
                         <div className="flex items-center space-x-2"><RadioGroupItem value="upi" id="upi" /><Label htmlFor="upi">UPI</Label></div>
                         <div className="flex items-center space-x-2"><RadioGroupItem value="cod" id="cod" /><Label htmlFor="cod">Cash on Delivery</Label></div>
@@ -225,9 +197,9 @@ export function CheckoutFlowModal({ children }: { children: React.ReactNode }) {
                 </div>
             </div>
         </div>
-      </form>
+      </div>
       <DialogFooter className="border-t pt-4">
-        <Button type="submit" form="checkout-form" size="lg" className="w-full" disabled={cartItems.length === 0}>
+        <Button onClick={handlePlaceOrder} size="lg" className="w-full" disabled={cartItems.length === 0}>
           Place Order
         </Button>
       </DialogFooter>
