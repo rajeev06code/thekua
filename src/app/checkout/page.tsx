@@ -1,6 +1,7 @@
+
 "use client";
 
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useCart } from '@/hooks/use-cart';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -11,21 +12,65 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Checkbox } from '@/components/ui/checkbox';
 import Image from 'next/image';
 import placeholderImages from '@/lib/placeholder-images.json';
+import { useForm, type SubmitHandler } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+
+const checkoutSchema = z.object({
+  email: z.string().email(),
+  firstName: z.string().min(1, 'First name is required'),
+  lastName: z.string().min(1, 'Last name is required'),
+  address: z.string().min(1, 'Address is required'),
+  city: z.string().min(1, 'City is required'),
+  state: z.string().min(1, 'State is required'),
+  zip: z.string().min(1, 'ZIP code is required'),
+  paymentMethod: z.enum(['card', 'upi', 'cod']),
+  saveInfo: z.boolean().optional(),
+});
+
+type CheckoutFormValues = z.infer<typeof checkoutSchema>;
 
 export default function CheckoutPage() {
-  const { cartItems, getCartTotal, getTotalItems } = useCart();
+  const { cartItems, getCartTotal, getTotalItems, clearCart } = useCart();
+  const router = useRouter();
+
+  const { register, handleSubmit, formState: { errors } } = useForm<CheckoutFormValues>({
+    resolver: zodResolver(checkoutSchema),
+    defaultValues: {
+      paymentMethod: 'card',
+    }
+  });
+
   const cartTotal = getCartTotal();
   const totalItems = getTotalItems();
   const shippingCost = cartTotal > 500 ? 0 : 50;
   const grandTotal = cartTotal + shippingCost;
 
+  const onSubmit: SubmitHandler<CheckoutFormValues> = (data) => {
+    // In a real app, you'd process the payment and save the order here.
+    // For this dummy flow, we'll just clear the cart and redirect.
+    const orderId = `TD-${Math.floor(Math.random() * 9000) + 1000}`;
+    const orderDetails = {
+      orderId,
+      ...data,
+      items: cartItems,
+      total: grandTotal,
+    };
+    
+    // We can store the order in localStorage for the confirmation page
+    localStorage.setItem('lastOrder', JSON.stringify(orderDetails));
+
+    clearCart();
+    router.push(`/order-confirmation?orderId=${orderId}`);
+  };
+
   return (
     <div className="container py-12 md:py-16">
       <h1 className="mb-8 font-headline text-3xl font-bold">Checkout</h1>
       
-      <div className="grid grid-cols-1 gap-12 lg:grid-cols-5">
+      <form id="checkout-form" onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 gap-12 lg:grid-cols-5">
         <div className="lg:col-span-3">
-          <form className="space-y-8">
+          <div className="space-y-8">
             <Card>
               <CardHeader>
                 <CardTitle>Contact Information</CardTitle>
@@ -33,7 +78,8 @@ export default function CheckoutPage() {
               <CardContent>
                 <div className="space-y-2">
                   <Label htmlFor="email">Email Address</Label>
-                  <Input id="email" type="email" placeholder="you@example.com" />
+                  <Input id="email" type="email" placeholder="you@example.com" {...register('email')} />
+                  {errors.email && <p className="text-sm text-destructive">{errors.email.message}</p>}
                 </div>
               </CardContent>
             </Card>
@@ -45,34 +91,40 @@ export default function CheckoutPage() {
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="first-name">First Name</Label>
-                    <Input id="first-name" placeholder="John" />
+                    <Label htmlFor="firstName">First Name</Label>
+                    <Input id="firstName" placeholder="John" {...register('firstName')} />
+                    {errors.firstName && <p className="text-sm text-destructive">{errors.firstName.message}</p>}
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="last-name">Last Name</Label>
-                    <Input id="last-name" placeholder="Doe" />
+                    <Label htmlFor="lastName">Last Name</Label>
+                    <Input id="lastName" placeholder="Doe" {...register('lastName')} />
+                     {errors.lastName && <p className="text-sm text-destructive">{errors.lastName.message}</p>}
                   </div>
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="address">Address</Label>
-                  <Input id="address" placeholder="123 Main St" />
+                  <Input id="address" placeholder="123 Main St" {...register('address')} />
+                   {errors.address && <p className="text-sm text-destructive">{errors.address.message}</p>}
                 </div>
                  <div className="grid grid-cols-3 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="city">City</Label>
-                    <Input id="city" placeholder="Patna" />
+                    <Input id="city" placeholder="Patna" {...register('city')} />
+                    {errors.city && <p className="text-sm text-destructive">{errors.city.message}</p>}
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="state">State</Label>
-                    <Input id="state" placeholder="Bihar" />
+                    <Input id="state" placeholder="Bihar" {...register('state')} />
+                    {errors.state && <p className="text-sm text-destructive">{errors.state.message}</p>}
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="zip">ZIP Code</Label>
-                    <Input id="zip" placeholder="800001" />
+                    <Input id="zip" placeholder="800001" {...register('zip')} />
+                    {errors.zip && <p className="text-sm text-destructive">{errors.zip.message}</p>}
                   </div>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Checkbox id="save-info" />
+                  <Checkbox id="save-info" {...register('saveInfo')} />
                   <Label htmlFor="save-info">Save this information for next time</Label>
                 </div>
               </CardContent>
@@ -83,7 +135,7 @@ export default function CheckoutPage() {
                 <CardTitle>Payment</CardTitle>
               </CardHeader>
               <CardContent>
-                 <RadioGroup defaultValue="card" className="space-y-2">
+                 <RadioGroup defaultValue="card" className="space-y-2" {...register('paymentMethod')}>
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="card" id="card" />
                       <Label htmlFor="card">Credit/Debit Card</Label>
@@ -99,7 +151,7 @@ export default function CheckoutPage() {
                  </RadioGroup>
               </CardContent>
             </Card>
-          </form>
+          </div>
         </div>
         
         <div className="lg:col-span-2">
@@ -146,11 +198,13 @@ export default function CheckoutPage() {
                 <span>Total</span>
                 <span>₹{grandTotal.toFixed(2)}</span>
               </div>
-              <Button type="submit" form="checkout-form" className="w-full" size="lg">Place Order</Button>
+              <Button type="submit" form="checkout-form" className="w-full" size="lg" disabled={cartItems.length === 0}>
+                Place Order
+              </Button>
             </CardContent>
           </Card>
         </div>
-      </div>
+      </form>
     </div>
   );
 }
