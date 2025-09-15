@@ -113,6 +113,66 @@
       "description": "Thekua being prepared.",
       "imageUrl": "https://i.ytimg.com/vi/Z_KS3Bv-Ftk/mqdefault.jpg",
       "imageHint": "making thekua"
+    },
+    {
+      "id": "thekua-13",
+      "description": "Thekua for puja prasad.",
+      "imageUrl": "https://picsum.photos/seed/t13/600/400",
+      "imageHint": "religious offering"
+    },
+    {
+      "id": "thekua-14",
+      "description": "Thekua with sesame seeds.",
+      "imageUrl": "https://picsum.photos/seed/t14/600/400",
+      "imageHint": "sesame snacks"
+    },
+    {
+      "id": "thekua-15",
+      "description": "Thekua for Navratri.",
+      "imageUrl": "https://picsum.photos/seed/t15/600/400",
+      "imageHint": "festive food"
+    },
+    {
+      "id": "thekua-16",
+      "description": "Thekua shaped like modak.",
+      "imageUrl": "https://picsum.photos/seed/t16/600/400",
+      "imageHint": "creative sweets"
+    },
+    {
+      "id": "thekua-17",
+      "description": "Thekua for Karwa Chauth.",
+      "imageUrl": "https://picsum.photos/seed/t17/600/400",
+      "imageHint": "indian festival"
+    },
+    {
+      "id": "thekua-18",
+      "description": "Thekua gift pack for Bhai Dooj.",
+      "imageUrl": "https://picsum.photos/seed/t18/600/400",
+      "imageHint": "sibling gift"
+    },
+    {
+      "id": "thekua-19",
+      "description": "Thekua for Makar Sankranti.",
+      "imageUrl": "https://picsum.photos/seed/t19/600/400",
+      "imageHint": "harvest festival"
+    },
+    {
+      "id": "thekua-20",
+      "description": "Colorful Thekua for Holi.",
+      "imageUrl": "https://picsum.photos/seed/t20/600/400",
+      "imageHint": "festival colors"
+    },
+    {
+      "id": "thekua-21",
+      "description": "Thekua for Raksha Bandhan.",
+      "imageUrl": "https://picsum.photos/seed/t21/600/400",
+      "imageHint": "rakhi sweet"
+    },
+    {
+      "id": "thekua-22",
+      "description": "Subscription box for Thekua.",
+      "imageUrl": "https://picsum.photos/seed/t22/600/400",
+      "imageHint": "food subscription"
     }
   ]
 }
