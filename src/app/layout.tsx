@@ -28,6 +28,10 @@ export default function RootLayout({
       <head>
         <title>Thekua Delight</title>
         <meta name="description" content="Authentic Bihari Thekua Snacks, straight from our heritage to your home." />
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+        <link rel="manifest" href="/manifest.webmanifest" />
+        <meta name="theme-color" content="#FDFBD4" />
+        <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap" rel="stylesheet" />
