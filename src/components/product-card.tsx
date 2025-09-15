@@ -1,8 +1,9 @@
+
 "use client";
 
 import Image from 'next/image';
 import { toast } from '@/hooks/use-toast';
-import { ShoppingCart, Eye } from 'lucide-react';
+import { ShoppingCart, Eye, Plus, Minus } from 'lucide-react';
 import { useState } from 'react';
 
 import type { Product } from '@/lib/types';
@@ -17,10 +18,12 @@ type ProductCardProps = {
 };
 
 export function ProductCard({ product }: ProductCardProps) {
-  const { addItem } = useCart();
+  const { addItem, cartItems, updateQuantity } = useCart();
   const firstImage = product.images[0];
   const imageUrl = placeholderImages.placeholderImages.find(p => p.id === firstImage.id)?.imageUrl || "/placeholder.svg";
   const [isDetailModalOpen, setDetailModalOpen] = useState(false);
+
+  const cartItem = cartItems.find(item => item.id === product.id);
 
   const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -36,6 +39,13 @@ export function ProductCard({ product }: ProductCardProps) {
       title: "Added to cart",
       description: `${product.name} has been added to your cart.`,
     });
+  };
+
+  const handleUpdateQuantity = (e: React.MouseEvent<HTMLButtonElement>, quantity: number) => {
+    e.stopPropagation();
+    if (cartItem) {
+      updateQuantity(cartItem.id, cartItem.packSize, quantity);
+    }
   };
 
   return (
@@ -69,10 +79,22 @@ export function ProductCard({ product }: ProductCardProps) {
       </CardContent>
       <CardFooter className="flex items-center justify-between p-3 pt-0">
         <p className="text-base font-semibold">₹{product.price.toFixed(2)}</p>
-        <Button size="sm" className="text-xs" onClick={handleAddToCart}>
-          <ShoppingCart className="mr-1.5 h-4 w-4" />
-          Add
-        </Button>
+        {cartItem ? (
+          <div className="flex items-center gap-1">
+             <Button size="icon" variant="ghost" className="h-7 w-7" onClick={(e) => handleUpdateQuantity(e, cartItem.quantity - 1)}>
+                <Minus className="h-4 w-4" />
+              </Button>
+              <span className="w-8 text-center font-semibold text-sm">{cartItem.quantity}</span>
+              <Button size="icon" variant="ghost" className="h-7 w-7" onClick={(e) => handleUpdateQuantity(e, cartItem.quantity + 1)}>
+                <Plus className="h-4 w-4" />
+              </Button>
+          </div>
+        ) : (
+          <Button size="sm" className="text-xs" onClick={handleAddToCart}>
+            <ShoppingCart className="mr-1.5 h-4 w-4" />
+            Add
+          </Button>
+        )}
       </CardFooter>
     </Card>
     <ProductDetailModal isOpen={isDetailModalOpen} setIsOpen={setDetailModalOpen} product={product} />
