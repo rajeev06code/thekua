@@ -35,7 +35,7 @@ export function HeroCarousel({ images }: HeroCarouselProps) {
       <CarouselContent>
         {images.map((image, index) => (
           <CarouselItem key={image.id || index}>
-            <div className="relative w-full h-[40vh] md:h-[40vh]">
+            <div className="relative w-full h-[60vh] md:h-[60vh]">
               <Image
                 src={image.imageUrl}
                 alt={image.description}
@@ -52,3 +52,5 @@ export function HeroCarousel({ images }: HeroCarouselProps) {
   );
 }
 
+
+    
