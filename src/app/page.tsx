@@ -65,9 +65,9 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="categories" className="py-12 md:py-24 bg-secondary/30">
+      <section id="categories" className="py-8 md:py-12 bg-secondary/30">
         <div className="container">
-          <h2 className="mb-8 text-center font-headline text-3xl font-bold md:mb-12 md:text-4xl">
+          <h2 className="mb-8 text-center font-headline text-3xl font-bold md:text-4xl">
             Browse by Category
           </h2>
           <CategoryBrowser categories={categories} products={products} />

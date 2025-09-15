@@ -42,12 +42,12 @@ export function CategoryBrowser({ categories, products }: CategoryBrowserProps) 
                             <div 
                                 key={category.name} 
                                 className={cn(
-                                    "flex flex-col items-center gap-2 cursor-pointer group flex-shrink-0 w-32",
+                                    "flex flex-col items-center gap-2 cursor-pointer group flex-shrink-0 w-28",
                                     index === categories.length - 1 ? "pr-16 md:pr-0" : ""
                                 )}
                                 onClick={() => handleCategoryClick(category)}
                             >
-                                <div className="relative h-32 w-32 rounded-full overflow-hidden border-4 border-transparent group-hover:border-primary transition-all duration-300 shadow-lg">
+                                <div className="relative h-28 w-28 rounded-full overflow-hidden border-4 border-transparent group-hover:border-primary transition-all duration-300 shadow-lg">
                                     <Image
                                         src={imageUrl}
                                         alt={category.name}
@@ -56,7 +56,7 @@ export function CategoryBrowser({ categories, products }: CategoryBrowserProps) 
                                         data-ai-hint="thekua snacks"
                                     />
                                 </div>
-                                <h3 className="font-semibold text-lg text-muted-foreground group-hover:text-primary transition-colors text-center">{category.name}</h3>
+                                <h3 className="font-semibold text-base text-muted-foreground group-hover:text-primary transition-colors text-center">{category.name}</h3>
                             </div>
                         )
                     })}
