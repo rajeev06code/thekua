@@ -93,7 +93,7 @@ export function CheckoutFlowModal({ children }: { children: React.ReactNode }) {
         </div>
       ) : (
         <>
-          <ScrollArea className="flex-grow my-4">
+          <ScrollArea className="flex-grow my-4 -mr-6">
             <div className="space-y-4 pr-6">
               {cartItems.map(item => {
                 const imageUrl = placeholderImages.placeholderImages.find(p => p.id === item.image.id)?.imageUrl || "/placeholder.svg";
@@ -148,8 +148,8 @@ export function CheckoutFlowModal({ children }: { children: React.ReactNode }) {
           Checkout
         </DialogTitle>
       </DialogHeader>
-      <form id="checkout-form" onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-6 flex-grow overflow-y-auto pr-2 py-4">
-        <div className="space-y-6">
+      <form id="checkout-form" onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-6 flex-grow overflow-y-auto pr-2 py-4 -mr-6">
+        <div className="space-y-6 md:pr-4">
             <div>
                 <Label htmlFor="email">Email Address</Label>
                 <Input id="email" type="email" placeholder="you@example.com" {...register('email')} />
@@ -202,7 +202,7 @@ export function CheckoutFlowModal({ children }: { children: React.ReactNode }) {
                 </RadioGroup>
               </div>
         </div>
-        <div className="space-y-4">
+        <div className="space-y-4 bg-secondary/50 rounded-lg p-4 -mt-4 md:mt-0 h-fit">
           <h3 className="font-semibold">Order Summary</h3>
            <div className="space-y-2 max-h-48 overflow-y-auto pr-2 border-t border-b py-2">
               {cartItems.map(item => {
@@ -241,7 +241,7 @@ export function CheckoutFlowModal({ children }: { children: React.ReactNode }) {
       </DialogHeader>
       <div className="my-6">
         <h3 className="mb-4 text-lg font-semibold">Order Summary</h3>
-        <ScrollArea className="max-h-60">
+        <ScrollArea className="max-h-60 -mr-6">
           <div className="space-y-4 pr-6">
             {orderDetails?.items.map(item => {
               const imageUrl = placeholderImages.placeholderImages.find(p => p.id === item.image.id)?.imageUrl || "/placeholder.svg";
@@ -287,11 +287,9 @@ export function CheckoutFlowModal({ children }: { children: React.ReactNode }) {
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="sm:max-w-lg md:max-w-3xl lg:max-w-4xl h-[90vh] flex flex-col">
+      <DialogContent className="sm:max-w-xl md:max-w-3xl lg:max-w-4xl h-[90vh] flex flex-col">
         {renderStep()}
       </DialogContent>
     </Dialog>
   );
 }
-
-    
