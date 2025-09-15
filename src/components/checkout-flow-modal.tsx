@@ -148,79 +148,81 @@ export function CheckoutFlowModal({ children }: { children: React.ReactNode }) {
           Checkout
         </DialogTitle>
       </DialogHeader>
-      <form id="checkout-form" onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-6 flex-grow overflow-y-auto pr-2 py-4 -mr-6">
-        <div className="space-y-6 md:pr-4">
-            <div>
-                <Label htmlFor="email">Email Address</Label>
-                <Input id="email" type="email" placeholder="you@example.com" {...register('email')} />
-                {errors.email && <p className="text-sm text-destructive mt-1">{errors.email.message}</p>}
-            </div>
-             <div className="grid grid-cols-2 gap-4">
+      <form id="checkout-form" onSubmit={handleSubmit(onSubmit)} className="flex-grow overflow-y-auto pr-2 py-4 -mr-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-6 md:pr-4">
                 <div>
-                    <Label htmlFor="firstName">First Name</Label>
-                    <Input id="firstName" placeholder="John" {...register('firstName')} />
-                    {errors.firstName && <p className="text-sm text-destructive mt-1">{errors.firstName.message}</p>}
+                    <Label htmlFor="email">Email Address</Label>
+                    <Input id="email" type="email" placeholder="you@example.com" {...register('email')} />
+                    {errors.email && <p className="text-sm text-destructive mt-1">{errors.email.message}</p>}
                 </div>
-                <div>
-                    <Label htmlFor="lastName">Last Name</Label>
-                    <Input id="lastName" placeholder="Doe" {...register('lastName')} />
-                    {errors.lastName && <p className="text-sm text-destructive mt-1">{errors.lastName.message}</p>}
-                </div>
-             </div>
-             <div>
-                <Label htmlFor="address">Address</Label>
-                <Input id="address" placeholder="123 Main St" {...register('address')} />
-                {errors.address && <p className="text-sm text-destructive mt-1">{errors.address.message}</p>}
-             </div>
-             <div className="grid grid-cols-3 gap-4">
-                <div>
-                    <Label htmlFor="city">City</Label>
-                    <Input id="city" placeholder="Patna" {...register('city')} />
-                    {errors.city && <p className="text-sm text-destructive mt-1">{errors.city.message}</p>}
-                </div>
-                <div>
-                    <Label htmlFor="state">State</Label>
-                    <Input id="state" placeholder="Bihar" {...register('state')} />
-                    {errors.state && <p className="text-sm text-destructive mt-1">{errors.state.message}</p>}
-                </div>
-                <div>
-                    <Label htmlFor="zip">ZIP</Label>
-                    <Input id="zip" placeholder="800001" {...register('zip')} />
-                    {errors.zip && <p className="text-sm text-destructive mt-1">{errors.zip.message}</p>}
-                </div>
-             </div>
-             <div className="flex items-center space-x-2">
-                <Checkbox id="save-info" {...register('saveInfo')} />
-                <Label htmlFor="save-info">Save this information for next time</Label>
-             </div>
-              <div>
-                <Label>Payment</Label>
-                <RadioGroup defaultValue="card" className="mt-2 space-y-2" {...register('paymentMethod')}>
-                    <div className="flex items-center space-x-2"><RadioGroupItem value="card" id="card" /><Label htmlFor="card">Credit/Debit Card</Label></div>
-                    <div className="flex items-center space-x-2"><RadioGroupItem value="upi" id="upi" /><Label htmlFor="upi">UPI</Label></div>
-                    <div className="flex items-center space-x-2"><RadioGroupItem value="cod" id="cod" /><Label htmlFor="cod">Cash on Delivery</Label></div>
-                </RadioGroup>
-              </div>
-        </div>
-        <div className="space-y-4 bg-secondary/50 rounded-lg p-4 -mt-4 md:mt-0 h-fit">
-          <h3 className="font-semibold">Order Summary</h3>
-           <div className="space-y-2 max-h-48 overflow-y-auto pr-2 border-t border-b py-2">
-              {cartItems.map(item => {
-                const imageUrl = placeholderImages.placeholderImages.find(p => p.id === item.image.id)?.imageUrl || "/placeholder.svg";
-                return (
-                  <div key={`${item.id}-${item.packSize}`} className="flex items-center gap-2">
-                    <Image src={imageUrl} alt={item.image.alt} width={48} height={48} className="rounded-md" />
-                    <div className="flex-grow"><p className="font-medium text-sm">{item.name}</p><p className="text-xs text-muted-foreground">{item.quantity} x {item.packSize}</p></div>
-                    <p className="text-sm">₹{(item.price * item.quantity).toFixed(2)}</p>
+                 <div className="grid grid-cols-2 gap-4">
+                    <div>
+                        <Label htmlFor="firstName">First Name</Label>
+                        <Input id="firstName" placeholder="John" {...register('firstName')} />
+                        {errors.firstName && <p className="text-sm text-destructive mt-1">{errors.firstName.message}</p>}
+                    </div>
+                    <div>
+                        <Label htmlFor="lastName">Last Name</Label>
+                        <Input id="lastName" placeholder="Doe" {...register('lastName')} />
+                        {errors.lastName && <p className="text-sm text-destructive mt-1">{errors.lastName.message}</p>}
+                    </div>
+                 </div>
+                 <div>
+                    <Label htmlFor="address">Address</Label>
+                    <Input id="address" placeholder="123 Main St" {...register('address')} />
+                    {errors.address && <p className="text-sm text-destructive mt-1">{errors.address.message}</p>}
+                 </div>
+                 <div className="grid grid-cols-3 gap-4">
+                    <div>
+                        <Label htmlFor="city">City</Label>
+                        <Input id="city" placeholder="Patna" {...register('city')} />
+                        {errors.city && <p className="text-sm text-destructive mt-1">{errors.city.message}</p>}
+                    </div>
+                    <div>
+                        <Label htmlFor="state">State</Label>
+                        <Input id="state" placeholder="Bihar" {...register('state')} />
+                        {errors.state && <p className="text-sm text-destructive mt-1">{errors.state.message}</p>}
+                    </div>
+                    <div>
+                        <Label htmlFor="zip">ZIP</Label>
+                        <Input id="zip" placeholder="800001" {...register('zip')} />
+                        {errors.zip && <p className="text-sm text-destructive mt-1">{errors.zip.message}</p>}
+                    </div>
+                 </div>
+                 <div className="flex items-center space-x-2">
+                    <Checkbox id="save-info" {...register('saveInfo')} />
+                    <Label htmlFor="save-info">Save this information for next time</Label>
+                 </div>
+                  <div>
+                    <Label>Payment</Label>
+                    <RadioGroup defaultValue="card" className="mt-2 space-y-2" {...register('paymentMethod')}>
+                        <div className="flex items-center space-x-2"><RadioGroupItem value="card" id="card" /><Label htmlFor="card">Credit/Debit Card</Label></div>
+                        <div className="flex items-center space-x-2"><RadioGroupItem value="upi" id="upi" /><Label htmlFor="upi">UPI</Label></div>
+                        <div className="flex items-center space-x-2"><RadioGroupItem value="cod" id="cod" /><Label htmlFor="cod">Cash on Delivery</Label></div>
+                    </RadioGroup>
                   </div>
-                );
-              })}
             </div>
-            <div className="space-y-2">
-                <div className="flex justify-between text-sm"><span>Subtotal</span><span>₹{cartTotal.toFixed(2)}</span></div>
-                <div className="flex justify-between text-sm"><span>Shipping</span><span>{shippingCost > 0 ? `₹${shippingCost.toFixed(2)}` : 'Free'}</span></div>
-                <Separator/>
-                <div className="flex justify-between font-bold"><span>Total</span><span>₹{grandTotal.toFixed(2)}</span></div>
+            <div className="space-y-4 bg-secondary/50 rounded-lg p-4 -mt-4 md:mt-0 h-fit">
+              <h3 className="font-semibold">Order Summary</h3>
+               <div className="space-y-2 max-h-48 overflow-y-auto pr-2 border-t border-b py-2">
+                  {cartItems.map(item => {
+                    const imageUrl = placeholderImages.placeholderImages.find(p => p.id === item.image.id)?.imageUrl || "/placeholder.svg";
+                    return (
+                      <div key={`${item.id}-${item.packSize}`} className="flex items-center gap-2">
+                        <Image src={imageUrl} alt={item.image.alt} width={48} height={48} className="rounded-md" />
+                        <div className="flex-grow"><p className="font-medium text-sm">{item.name}</p><p className="text-xs text-muted-foreground">{item.quantity} x {item.packSize}</p></div>
+                        <p className="text-sm">₹{(item.price * item.quantity).toFixed(2)}</p>
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className="space-y-2">
+                    <div className="flex justify-between text-sm"><span>Subtotal</span><span>₹{cartTotal.toFixed(2)}</span></div>
+                    <div className="flex justify-between text-sm"><span>Shipping</span><span>{shippingCost > 0 ? `₹${shippingCost.toFixed(2)}` : 'Free'}</span></div>
+                    <Separator/>
+                    <div className="flex justify-between font-bold"><span>Total</span><span>₹{grandTotal.toFixed(2)}</span></div>
+                </div>
             </div>
         </div>
       </form>
@@ -293,5 +295,3 @@ export function CheckoutFlowModal({ children }: { children: React.ReactNode }) {
     </Dialog>
   );
 }
-
-    
